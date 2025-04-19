@@ -1,0 +1,221 @@
+/* Menambahkan padding pada body untuk memberikan jarak */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a7fdb, #9a5fd1);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;  /* Mencegah body untuk scroll */
+    padding: 20px;  /* Menambah padding pada body */
+}
+
+/* Styling untuk card header */
+.card-header {
+    background-color: #5A8F98;  /* Biru kalem */
+    color: white;
+    font-size: 1.5rem;
+    padding: 1rem;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+}
+
+/* Menambahkan shadow pada card */
+.card {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Styling untuk tabel, menambah sedikit spasi dan border */
+.table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 2px; /* Menambah jarak bawah pada tabel */
+}
+
+/* Styling baris tabel saat di-hover */
+.table-hover tbody tr:hover {
+    background-color: #f0f4f7; /* Warna terang saat di-hover */
+}
+
+/* Menambahkan border pada setiap sel tabel */
+.table-bordered td, .table-bordered th {
+    border: 1px solid #dee2e6;
+    padding: 12px 15px;
+}
+
+/* Styling untuk header tabel */
+th {
+    background-color: #4d647d;  /* Biru gelap */
+    color: white;
+    font-weight: 600;
+}
+
+/* Styling untuk tombol */
+.btn {
+    font-size: 0.875rem;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Styling untuk tombol edit (warna oranye) */
+.btn-warning {
+    background-color: #f1b24a;  /* Oranye lembut */
+    color: white;
+}
+
+/* Styling untuk tombol delete (warna merah) */
+.btn-danger {
+    background-color: #e74c3c;  /* Merah elegan */
+    color: white;
+}
+
+/* Menambahkan efek hover pada tombol */
+.btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Menambahkan efek shadow saat hover */
+}
+
+/* Tombol edit, dengan warna biru saat hover */
+.btn-warning:hover {
+    background-color: #e6892f;
+}
+
+/* Tombol delete, dengan warna merah tua saat hover */
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Membuat tabel responsif pada layar kecil */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Styling untuk form aksi dalam tabel */
+form {
+    display: inline;
+    margin-right: 5px;
+}
+
+/* Styling untuk notifikasi success */
+.alert-success {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Styling untuk link tombol tambah soal */
+a.btn-success {
+    background-color: #27ae60;
+    color: white;
+    font-weight: bold;
+}
+
+a.btn-success:hover {
+    background-color: #2ecc71;
+}
+
+/* Apply gradient background to the modal */
+.modal-content {
+    background: linear-gradient(135deg, #6a1b9a, #9c27b0);
+    color: white;
+}
+
+/* Make modal title text white */
+.modal-header h5.modal-title {
+    color: white;
+}
+
+/* Style for modal header to make text more readable on gradient */
+.modal-header {
+    border-bottom: 1px solid #fff;
+}
+
+/* Customize the modal close button to fit with the theme */
+.modal-header .btn-close {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    color: white;
+    opacity: 0.8;
+}
+
+/* Customize buttons in the modal */
+.modal-footer button {
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.modal-footer button:hover {
+    background-color: #bf5ad1;
+    color: white;
+}
+
+/* Add some space for icons in the buttons */
+.btn i {
+    margin-right: 8px;
+}
+
+/* Change label color to white */
+label {
+    color: white;
+}
+
+/* Membuat header tabel tetap di posisi atas saat scroll */
+thead th {
+    position: sticky;
+    top: 0;
+    background-color: #343a40;
+    color: white;
+}
+
+/* Membatasi tinggi tabel agar tidak terlalu besar */
+.card-body > .table-responsive {
+    max-height: 300px; /* Atur tinggi maksimum sesuai kebutuhan */
+    padding-bottom: 30px; /* Ruang bawah pada table-responsive */
+}
+
+/* Menambahkan ruang ekstra di bawah konten wrapper */
+.content-wrapper {
+    padding-bottom: 200px; /* Menambah jarak lebih dari sebelumnya */
+}
+
+/* Menambahkan media query untuk responsivitas */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;  /* Mengatur padding body pada layar kecil */
+    }
+
+    .card-header {
+        font-size: 1.2rem;  /* Mengurangi ukuran font header */
+    }
+
+    .table-bordered td, .table-bordered th {
+        padding: 8px;  /* Mengurangi padding tabel pada layar kecil */
+    }
+
+    .btn {
+        font-size: 0.75rem;  /* Mengurangi ukuran tombol pada layar kecil */
+        padding: 6px 12px;
+    }
+
+    .modal-content {
+        padding: 15px;  /* Menambah padding modal pada layar kecil */
+    }
+
+    .content-wrapper {
+        padding-bottom: 100px;  /* Mengurangi jarak bawah untuk layar kecil */
+    }
+
+    .card-body > .table-responsive {
+        max-height: 250px; /* Mengurangi tinggi maksimum pada tabel di layar kecil */
+    }
+}

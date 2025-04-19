@@ -1,0 +1,186 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a7fdb, #9a5fd1);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Membuat container utama yang akan memusatkan konten */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Tampilan card/form login */
+.auth-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Styling untuk logo atau ikon jika diperlukan */
+.auth-logo {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Grouping input dan label untuk konsistensi */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* Fokus pada input */
+.input-group input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Button utama untuk kirim link reset */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+/* Styling untuk tombol login dengan Google */
+.google-btn {
+    margin-top: 20px;
+}
+
+.google-signin-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #f1f1f1;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.google-signin-btn i {
+    margin-right: 10px;
+}
+
+.google-signin-btn:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+/* Tautan "Kembali ke Login" */
+.links {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.links a {
+    margin: 5px 0;
+    display: inline-block;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsif untuk tampilan perangkat kecil */
+@media (max-width: 600px) {
+    .auth-card {
+        width: 90%;
+        padding: 30px;
+    }
+
+    .auth-logo {
+        width: 80px;
+    }
+}
+
+/* Styling untuk select input jika digunakan */
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+}
+
+.input-group select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Styling untuk Google Sign-In button (jika digunakan) */
+.g-signin2 {
+    width: 100%;
+    max-width: 350px;
+    padding: 14px;
+    font-size: 18px;
+    background-color: #4285F4;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.g-signin2:hover {
+    background-color: #357ae8;
+}

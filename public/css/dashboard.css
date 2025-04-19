@@ -1,0 +1,98 @@
+/* Styling untuk body */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a7fdb, #9a5fd1);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: linear-gradient(135deg, #6a7fdb, #9a5fd1);
+    color: white;
+    transition: left 0.3s ease-in-out;
+    padding-top: 20px;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 20px;
+    border-bottom: 1px solid #444;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background-color: #575757;
+}
+
+/* Konten utama */
+.content {
+    margin-left: 0;
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%; /* Menjamin bahwa konten menggunakan seluruh lebar yang tersedia */
+}
+
+/* Konten saat sidebar dibuka */
+.sidebar.active + .content {
+    margin-left: 250px; /* Menyesuaikan lebar dengan sidebar */
+}
+
+/* Header dalam konten */
+.content .header {
+    background: none;
+    padding: 0;
+    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute; /* Membuat logo dan ucapan berada di posisi tetap */
+    top: 50%;
+    transform: translateY(-50%); /* Agar elemen tetap berada di tengah */
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%); /* Menggunakan translateX dan Y untuk memastikan posisi tengah */
+}
+
+.content .header img {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+.content .header h3 {
+    font-size: 24px;
+    text-align: center;
+    color: white;
+    margin: 0;
+}
+
+/* Konten lainnya */
+.content h1 {
+    font-size: 30px;
+    color: white;
+}
