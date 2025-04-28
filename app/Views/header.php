@@ -30,8 +30,10 @@
                     <li><a href="<?= base_url('/dashboard/admin') ?>">Dashboard</a></li>
                     <li><a href="<?= base_url('soal') ?>">Gudang Soal</a></li>
                     <li><a href="<?= base_url('soal') ?>">List Quiz</a></li>
-                    <li><a href="<?= base_url('admin') ?>">Manajemen Peserta</a></li>
+                    <li><a href="<?= base_url('admin/daftar_peserta') ?>">Manajemen Peserta</a></li>
+                    <li><a href="<?= base_url('admin/daftar_admin') ?>">Manajemen Admin</a></li>
                     <li><a href="<?= base_url('admin/manage') ?>">Leaderboard</a></li>
+                    <li><a href="<?= base_url('/admin/about_us'); ?>">About Us</a></li>
                 <?php endif; ?>
                 <?php if (session()->get('role') == 'peserta'): ?>
                     <li><a href="<?= base_url('peserta') ?>">Dashboard</a></li>
@@ -48,4 +50,3 @@
         sidebar.classList.toggle('active');
     }
 </script>
-
