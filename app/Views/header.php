@@ -29,7 +29,7 @@
                 <?php if (session()->get('role') == 'admin'): ?>
                     <li><a href="<?= base_url('/dashboard/admin') ?>">Dashboard</a></li>
                     <li><a href="<?= base_url('soal') ?>">Gudang Soal</a></li>
-                    <li><a href="<?= base_url('soal') ?>">List Quiz</a></li>
+                    <li><a href="<?= base_url('soal/list_quiz') ?>">List Quiz</a></li>
                     <li><a href="<?= base_url('admin/daftar_peserta') ?>">Manajemen Peserta</a></li>
                     <li><a href="<?= base_url('admin/daftar_admin') ?>">Manajemen Admin</a></li>
                     <li><a href="<?= base_url('admin/manage') ?>">Leaderboard</a></li>

@@ -9,22 +9,22 @@ class BuatQuiz extends Controller
 {
     public function index()
     {
-        return view('buat_quiz');
+        return view('soal/index');
     }
 
     public function create()
     {
         // Ambil data dari form
         $data = [
-            'judul'        => $this->request->getPost('judul'),
-            'deskripsi'    => $this->request->getPost('deskripsi'),
-            'mode'         => $this->request->getPost('mode'),
-            'timer'        => $this->request->getPost('timer'),
-            'kode_akses'   => strtoupper(bin2hex(random_bytes(6))), // Membuat kode akses unik
+            'judul'          => $this->request->getPost('judul'),
+            'deskripsi'      => $this->request->getPost('deskripsi'),
+            'mode'           => $this->request->getPost('mode'),
+            'timer'          => $this->request->getPost('timer') * 60, // menit dikali 60
+            'kode_akses'     => strtoupper(bin2hex(random_bytes(6))),
             'tanggal_dibuat' => date('Y-m-d H:i:s'),
         ];
 
-        // Validasi data
+        // Validasi dan simpan
         $quizModel = new BuatQuizModel();
         if (!$quizModel->save($data)) {
             return $this->response->setJSON([
@@ -36,10 +36,20 @@ class BuatQuiz extends Controller
         // Ambil kode akses yang baru dibuat
         $kodeAkses = $data['kode_akses'];
 
-        // Respons sukses dengan kode akses
+        // Respons sukses
         return $this->response->setJSON([
             'success' => true,
             'kode_akses' => $kodeAkses,
         ]);
+    }
+
+    public function list()
+    {
+        // Ambil data quiz dari model
+        $buatQuizModel = new BuatQuizModel(); 
+        $data['quiz'] = $buatQuizModel->findAll(); 
+
+        // Kirim data ke view
+        return view('soal/list_quiz', $data);
     }
 }

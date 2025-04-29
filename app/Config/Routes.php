@@ -35,8 +35,10 @@ $routes->post('soal/tambah', 'Soal::tambah');
 $routes->post('soal/update/(:num)', 'Soal::update/$1');
 $routes->post('soal/hapus/(:num)', 'Soal::hapus/$1');
 
-$routes->get('/soal/index', 'BuatQuiz::index');
+$routes->get('/soal', 'Soal::index');
 $routes->post('/buatquiz/create', 'BuatQuiz::create');
+
+$routes->get('soal/list_quiz', 'BuatQuiz::list');
 
 $routes->get('/admin/daftar_peserta', 'Admin::daftar_peserta');
 $routes->get('/admin/daftar_admin', 'Admin::daftar_admin');

@@ -7,7 +7,7 @@ body {
     flex-direction: column;
 }
 
-/* Sidebar */
+/* Sidebar - Keep as is */
 .sidebar {
     position: fixed;
     left: -250px;
@@ -54,45 +54,77 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 100%; /* Menjamin bahwa konten menggunakan seluruh lebar yang tersedia */
+    width: 100%;
 }
 
 /* Konten saat sidebar dibuka */
 .sidebar.active + .content {
-    margin-left: 250px; /* Menyesuaikan lebar dengan sidebar */
+    margin-left: 250px;
 }
 
 /* Header dalam konten */
 .content .header {
-    background: none;
     padding: 0;
     color: white;
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
-    position: absolute; /* Membuat logo dan ucapan berada di posisi tetap */
-    top: 50%;
-    transform: translateY(-50%); /* Agar elemen tetap berada di tengah */
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%); /* Menggunakan translateX dan Y untuk memastikan posisi tengah */
+    align-items: center;
 }
 
-.content .header img {
-    max-width: 100px;
+.content .header h1 {
+    font-size: 30px;
+    color: white;
+    text-align: center;
     margin-bottom: 20px;
 }
 
-.content .header h3 {
-    font-size: 24px;
-    text-align: center;
-    color: white;
-    margin: 0;
+/* Styling untuk Logo */
+.logo-container {
+    margin-top: 20px;
 }
 
-/* Konten lainnya */
-.content h1 {
-    font-size: 30px;
+.logo {
+    max-width: 120px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Styling untuk Form Kode Akses */
+.quiz-access-form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row; /* Align form and button horizontally */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.quiz-access-form input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.quiz-access-form input[type="text"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.quiz-access-form .btn-join {
+    padding: 12px 25px;
+    background-color: #4CAF50; /* Green color */
     color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quiz-access-form .btn-join:hover {
+    background-color: #45a049;
 }

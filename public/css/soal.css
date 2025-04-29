@@ -5,7 +5,6 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;  /* Mencegah body untuk scroll */
     padding: 20px;  /* Menambah padding pada body */
 }
 

@@ -29,7 +29,7 @@
             </select>
           </div>
           <div class="mb-3">
-            <label for="timer" class="form-label">Timer (detik)</label>
+            <label for="timer" class="form-label">Timer</label>
             <input type="number" class="form-control" id="timer" name="timer">
           </div>
           <button type="submit" class="btn btn-primary">Buat Quiz</button>
