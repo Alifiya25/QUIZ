@@ -15,30 +15,37 @@ class Admin extends BaseController
 
     public function daftar_peserta()
     {
+        $sort = $this->request->getGet('sort');
+        $order = ($sort === 'desc') ? 'DESC' : 'ASC';
+
+        $peserta = $this->adminModel
+            ->where('role', 'peserta')
+            ->orderBy('username', $order)
+            ->findAll();
+
         $data = [
             'title' => 'Daftar peserta',
-            'peserta' => $this->adminModel->getUsersByRole('peserta'),
+            'peserta' => $peserta,
         ];
 
-        // Koneksi database manual
-
-        // $db = \Config\Database::connect();
-        // $peserta = $db->query("SELECT * FROM peserta");
-        // foreach ($peserta->getResultArray() as $row) {
-        //     d($row);
-        // }
-
-        // Koneksi database dengan model
         return view('admin/daftar_peserta', $data);
     }
 
+
     public function daftar_admin()
     {
-        $data = [
-            'title' => 'Daftar Admin',
-            'admin' => $this->adminModel->getUsersByRole('admin'),
-        ];
+        $sort = $this->request->getGet('sort');
+        $order = ($sort === 'desc') ? 'DESC' : 'ASC';
 
+        $admin = $this->adminModel
+            ->where('role', 'admin')
+            ->orderBy('username', $order)
+            ->findAll();
+
+        $data = [
+            'title' => 'Daftar admin',
+            'admin' => $admin,
+        ];
 
         return view('admin/daftar_admin', $data);
     }

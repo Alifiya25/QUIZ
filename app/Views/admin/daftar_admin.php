@@ -23,6 +23,16 @@
             <div class="col-lg-10">
                 <div class="card-custom">
                     <h2 class="mb-4"><?= esc($title) ?></h2>
+                    <!-- Dropdown Sorting -->
+                    <div class="mb-3 d-flex justify-content-end">
+                        <form method="get" action="">
+                            <label for="sort" class="me-2 fw-bold">Urutkan:</label>
+                            <select name="sort" id="sort" onchange="this.form.submit()" class="form-select form-select-sm w-auto d-inline">
+                                <option value="asc" <?= (isset($_GET['sort']) && $_GET['sort'] == 'asc') ? 'selected' : '' ?>>Nama A-Z</option>
+                                <option value="desc" <?= (isset($_GET['sort']) && $_GET['sort'] == 'desc') ? 'selected' : '' ?>>Nama Z-A</option>
+                            </select>
+                        </form>
+                    </div>
 
                     <!-- Tombol Tambah Data -->
                     <div class="text-end mb-3">

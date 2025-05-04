@@ -24,6 +24,17 @@
                 <div class="card-custom">
                     <h2 class="mb-4"><?= esc($title) ?></h2>
 
+                    <!-- Dropdown Sorting -->
+                    <div class="mb-3 d-flex justify-content-end">
+                        <form method="get" action="">
+                            <label for="sort" class="me-2 fw-bold">Urutkan:</label>
+                            <select name="sort" id="sort" onchange="this.form.submit()" class="form-select form-select-sm w-auto d-inline">
+                                <option value="asc" <?= (isset($_GET['sort']) && $_GET['sort'] == 'asc') ? 'selected' : '' ?>>Nama A-Z</option>
+                                <option value="desc" <?= (isset($_GET['sort']) && $_GET['sort'] == 'desc') ? 'selected' : '' ?>>Nama Z-A</option>
+                            </select>
+                        </form>
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover align-middle">
                             <thead class="table-dark text-center">
@@ -72,7 +83,6 @@
     <!-- SweetAlert Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Handle tombol hapus
             const hapusButtons = document.querySelectorAll('.btn-hapus-peserta');
 
             hapusButtons.forEach(button => {
@@ -81,7 +91,7 @@
                     const nama = this.dataset.nama;
 
                     Swal.fire({
-                        title: `Hapus ${nama} dari Dunia?`,
+                        title: `Hapus ${nama}?`,
                         text: "Data peserta akan dihapus secara permanen!",
                         icon: 'warning',
                         showCancelButton: true,
@@ -97,7 +107,6 @@
                 });
             });
 
-            // Flashdata notifikasi (jika ada)
             <?php if (session()->getFlashdata('message')): ?>
                 Swal.fire({
                     icon: 'success',
