@@ -24,16 +24,25 @@
                 <div class="card-custom">
                     <h2 class="mb-4"><?= esc($title) ?></h2>
 
-                    <!-- Dropdown Sorting -->
-                    <div class="mb-3 d-flex justify-content-end">
-                        <form method="get" action="">
-                            <label for="sort" class="me-2 fw-bold">Urutkan:</label>
-                            <select name="sort" id="sort" onchange="this.form.submit()" class="form-select form-select-sm w-auto d-inline">
-                                <option value="asc" <?= (isset($_GET['sort']) && $_GET['sort'] == 'asc') ? 'selected' : '' ?>>Nama A-Z</option>
-                                <option value="desc" <?= (isset($_GET['sort']) && $_GET['sort'] == 'desc') ? 'selected' : '' ?>>Nama Z-A</option>
+                    <!-- Form Search + Sort -->
+                    <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap">
+                        <form method="get" class="d-flex flex-wrap gap-2">
+                            <input type="text" name="search" class="form-control form-control-sm"
+                                placeholder="Cari nama atau email..." value="<?= esc($_GET['search'] ?? '') ?>">
+
+                            <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
+                                <option value="asc" <?= ($_GET['sort'] ?? '') === 'asc' ? 'selected' : '' ?>>Nama A-Z</option>
+                                <option value="desc" <?= ($_GET['sort'] ?? '') === 'desc' ? 'selected' : '' ?>>Nama Z-A</option>
                             </select>
+
+                            <button type="submit" class="btn btn-sm btn-primary">Cari</button>
+
+                            <?php if (!empty($_GET['search']) || !empty($_GET['sort'])): ?>
+                                <a href="<?= base_url('admin/daftar_peserta') ?>" class="btn btn-sm btn-secondary">Reset</a>
+                            <?php endif; ?>
                         </form>
                     </div>
+
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover align-middle">

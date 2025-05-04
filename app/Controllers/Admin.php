@@ -16,12 +16,20 @@ class Admin extends BaseController
     public function daftar_peserta()
     {
         $sort = $this->request->getGet('sort');
+        $search = $this->request->getGet('search');
+
         $order = ($sort === 'desc') ? 'DESC' : 'ASC';
 
-        $peserta = $this->adminModel
-            ->where('role', 'peserta')
-            ->orderBy('username', $order)
-            ->findAll();
+        $builder = $this->adminModel->where('role', 'peserta');
+
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('username', $search)
+                ->orLike('email', $search)
+                ->groupEnd();
+        }
+
+        $peserta = $builder->orderBy('username', $order)->findAll();
 
         $data = [
             'title' => 'Daftar peserta',
@@ -32,15 +40,24 @@ class Admin extends BaseController
     }
 
 
+
     public function daftar_admin()
     {
         $sort = $this->request->getGet('sort');
+        $search = $this->request->getGet('search');
+
         $order = ($sort === 'desc') ? 'DESC' : 'ASC';
 
-        $admin = $this->adminModel
-            ->where('role', 'admin')
-            ->orderBy('username', $order)
-            ->findAll();
+        $builder = $this->adminModel->where('role', 'admin');
+
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('username', $search)
+                ->orLike('email', $search)
+                ->groupEnd();
+        }
+
+        $admin = $builder->orderBy('username', $order)->findAll();
 
         $data = [
             'title' => 'Daftar admin',
