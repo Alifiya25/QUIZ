@@ -57,3 +57,5 @@ $routes->post('/admin/update_peserta/(:num)', 'Admin::update_peserta/$1');
 
 $routes->get('/admin/delete_admin/(:num)', 'Admin::delete_admin/$1');
 $routes->get('/admin/delete_peserta/(:num)', 'Admin::delete_peserta/$1');
+
+$routes->get('/soal/leaderboard', 'dashboard::leaderboard');

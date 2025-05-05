@@ -29,4 +29,8 @@ class Dashboard extends BaseController
         // Tampilkan halaman dashboard peserta
         return view('dashboard/peserta');
     }
+
+    public function leaderboard(){
+        return view('soal/leaderboard');
+    }
 }
