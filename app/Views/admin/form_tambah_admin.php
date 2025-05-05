@@ -22,8 +22,12 @@
 
                         <div class="mb-3">
                             <label for="username" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="username" name="username" value="<?= old('username') ?>" required>
+                            <input type="text" class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?= old('username') ?>" required>
+                            <div class="invalid-feedback">
+                                <?= (isset($validation)) ? $validation->getError('username') : '' ?>
+                            </div>
                         </div>
+
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
