@@ -37,7 +37,7 @@
                 <?php endif; ?>
                 <?php if (session()->get('role') == 'peserta'): ?>
                     <li><a href="<?= base_url('peserta') ?>">Dashboard</a></li>
-                    <li><a href="<?= base_url('peserta/tasks') ?>">Leadeboard</a></li>
+                    <li><a href="<?= base_url('soal/leaderboard') ?>">Leaderboard</a></li>
                     <li><a href="<?= base_url('peserta/tasks') ?>">Sertifikat</a></li>
                 <?php endif; ?>
             </ul>
