@@ -132,6 +132,7 @@
                 });
             <?php endif; ?>
         });
+    
     </script>
 </body>
 

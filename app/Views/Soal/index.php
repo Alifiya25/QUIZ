@@ -1,7 +1,7 @@
 <!-- Include Header -->
-<?= $this->include('header') ?>
+<?= view('header') ?>
 
-<!-- External JS & CSS -->
+<!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="stylesheet" href="<?= base_url('css/soal.css') ?>">
@@ -9,6 +9,7 @@
 
 <!-- Content Wrapper -->
 <div class="content-wrapper p-4">
+    
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Daftar Soal</h2>
@@ -17,7 +18,7 @@
         </button>
     </div>
 
-    <!-- SweetAlert Notifications -->
+    <!-- SweetAlert Flash Message -->
     <script>
         <?php if (session()->getFlashdata('success')): ?>
             Swal.fire({
@@ -36,10 +37,10 @@
         <?php endif; ?>
     </script>
 
-    <!-- Soal Table -->
+    <!-- Tabel Soal -->
     <div class="card">
         <div class="card-header">
-            <h5>Daftar Soal</h5>
+            <h5 class="mb-0">Daftar Soal Pilihan Ganda</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -70,35 +71,36 @@
                                         <td><?= esc($row['jawaban_benar']) ?></td>
                                         <td>
                                             <div class="d-flex">
-                                                <!-- Edit Button -->
-                                                <button type="button" class="btn btn-sm btn-warning btn-edit-soal me-2"
-                                                    data-bs-toggle="modal" data-bs-target="#modalEditSoal"
-                                                    data-id="<?= $row['id'] ?>"
-                                                    data-soal="<?= htmlspecialchars($row['soal'], ENT_QUOTES) ?>"
-                                                    data-a="<?= htmlspecialchars($row['pilihan_a'], ENT_QUOTES) ?>"
-                                                    data-b="<?= htmlspecialchars($row['pilihan_b'], ENT_QUOTES) ?>"
-                                                    data-c="<?= htmlspecialchars($row['pilihan_c'], ENT_QUOTES) ?>"
-                                                    data-d="<?= htmlspecialchars($row['pilihan_d'], ENT_QUOTES) ?>"
-                                                    data-jawaban="<?= $row['jawaban_benar'] ?>">
+                                                <!-- Edit Soal -->
+                                                <button type="button"
+                                                        class="btn btn-sm btn-warning btn-edit-soal me-2"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalEditSoal"
+                                                        data-id="<?= $row['id'] ?>"
+                                                        data-soal="<?= htmlspecialchars($row['soal'], ENT_QUOTES) ?>"
+                                                        data-a="<?= htmlspecialchars($row['pilihan_a'], ENT_QUOTES) ?>"
+                                                        data-b="<?= htmlspecialchars($row['pilihan_b'], ENT_QUOTES) ?>"
+                                                        data-c="<?= htmlspecialchars($row['pilihan_c'], ENT_QUOTES) ?>"
+                                                        data-d="<?= htmlspecialchars($row['pilihan_d'], ENT_QUOTES) ?>"
+                                                        data-jawaban="<?= $row['jawaban_benar'] ?>">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
 
-                                                <!-- Delete Button -->
-                                                <button 
-                                                    type="button" 
-                                                    class="btn btn-sm btn-danger btn-delete-soal" 
-                                                    data-id="<?= $row['id'] ?>">
+                                                <!-- Hapus Soal -->
+                                                <button type="button"
+                                                        class="btn btn-sm btn-danger btn-delete-soal"
+                                                        data-id="<?= $row['id'] ?>">
                                                     <i class="fas fa-trash"></i> Hapus
                                                 </button>
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endforeach ?>
+                                <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
                                     <td colspan="8" class="text-center">Belum ada soal.</td>
                                 </tr>
-                            <?php endif ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -106,7 +108,7 @@
         </div>
     </div>
 
-    <!-- Modals for Add, Edit, and Delete Soal -->
+    <!-- Modal Tambah, Edit, Hapus, dan Lainnya -->
     <?= $this->include('Soal/Modal/tambah') ?>
     <?= $this->include('Soal/Modal/edit') ?>
     <?= $this->include('Soal/Modal/hapus') ?>
@@ -115,8 +117,11 @@
 
 </div>
 
-<!-- Bootstrap JS Bundle -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- External JS File -->
+<!-- Custom JS -->
 <script src="<?= base_url('js/soal.js') ?>"></script>
+
+<!-- Include Footer -->
+<?= view('footer') ?>

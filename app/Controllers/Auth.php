@@ -59,6 +59,7 @@ class Auth extends Controller
         'email' => 'required|valid_email|is_unique[users.email]',
         'password' => 'required|min_length[8]',
         'password_confirm' => 'required|matches[password]',
+        'role'              => 'required|in_list[admin,peserta]',
     ]);
 
     if ($this->validate($validation->getRules())) {
@@ -66,13 +67,15 @@ class Auth extends Controller
         $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
         $email = $this->request->getPost('email');
         $username = $this->request->getPost('username');
+        $role = $this->request->getPost('role');
 
         // Simpan user ke database
         $userModel->save([
             'username' => $username,
             'email' => $email,
             'password' => $password,
-            'role' => 'peserta'
+            'role'     => $role,
+
         ]);
 
         // Kirim email pemberitahuan pendaftaran berhasil

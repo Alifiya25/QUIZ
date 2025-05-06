@@ -1,5 +1,5 @@
 <!-- Include Header -->
-<?= $this->include('header') ?>
+<?= view('header') ?>
 
 <!-- External CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -65,3 +65,5 @@
 
 <!-- Optional Custom JS -->
 <script src="<?= base_url('js/soal.js') ?>"></script>
+
+<?= view('footer') ?>

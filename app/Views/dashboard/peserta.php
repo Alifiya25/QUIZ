@@ -25,6 +25,6 @@
 </div>
 
 
-    <?php include(__DIR__ . '/../footer.php'); ?>
+<?= view('footer') ?>
 </body>
 </html>

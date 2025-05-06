@@ -134,7 +134,7 @@
   </style>
 </head>
 <body>
-
+<?= view('header') ?>
 <div class="leaderboard-container">
   <h4 class="leaderboard-title">Leaderboard <br><small class="text-light">Quizzy</small></h4>
 
@@ -167,6 +167,8 @@
     <?php endfor; ?>
   </div>
 </div>
+
+<?= view('footer') ?>
 
 </body>
 </html>

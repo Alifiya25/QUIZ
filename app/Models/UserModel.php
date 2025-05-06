@@ -18,11 +18,14 @@ class UserModel extends Model
 
 
     public function getUserById($id = false)
-    {
-        if ($id === false) {
-            return $this->findAll();
-        }
+{
+    if ($id === false) {
+        return $this->findAll();  // Mengambil semua data jika ID tidak diberikan
     }
+
+    return $this->find($id);  // Mengambil data berdasarkan ID jika diberikan
+}
+
 
     public function getUsersByRole($role)
     {

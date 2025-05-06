@@ -8,8 +8,12 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Auth::login');
 $routes->get('/login', 'Auth::login');
 $routes->post('/processLogin', 'Auth::processLogin');
+
+// File: app/Config/Routes.php
 $routes->get('/register', 'Auth::register');
 $routes->post('/processRegister', 'Auth::processRegister');
+
+//Logout
 $routes->get('/logout', 'Auth::logout');
 
 // Dashboard redirect routes
