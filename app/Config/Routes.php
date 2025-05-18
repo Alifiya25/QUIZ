@@ -80,5 +80,5 @@ $routes->get('/leaderboard', 'LeaderboardController::index');
 
 //Tampilan Leaderboard
 $routes->get('quiz/quiz_selesai', 'QuizController::quizSelesai');
-
+$routes->get('/dashboard/leaderboard', 'Dashboard::leaderboard');
 

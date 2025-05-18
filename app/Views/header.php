@@ -17,7 +17,8 @@
         <div class="user-nav">
             <ul>
                 <li><a href="<?= base_url('profile') ?>"><i class="fas fa-user"></i></a></li>
-                <li><a href="<?= base_url('logout') ?>"><i class="fas fa-sign-out-alt"></i></a></li>
+                <a href="#" class="btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+
             </ul>
         </div>
     </div>
@@ -34,11 +35,13 @@
                     <li><a href="<?= base_url('admin/daftar_admin') ?>"><i class="fas fa-user-cog"></i> Manajemen Admin</a></li>
                     <li><a href="<?= base_url('quiz/hasil_quiz') ?>"><i class="fas fa-trophy"></i> Hasil Quiz</a></li>
                     <li><a href="<?= base_url('/admin/about_us'); ?>"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="<?= base_url('/dashboard/leaderboard'); ?>"><i class="fas fa-info-circle"></i> leaderboard</a></li>
                 <?php endif; ?>
                 <?php if (session()->get('role') == 'peserta'): ?>
                     <li><a href="<?= base_url('/dashboard/peserta') ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                     <li><a href="<?= base_url('peserta/tasks') ?>"><i class="fas fa-certificate"></i> Sertifikat</a></li>
                     <li><a href="<?= base_url('/admin/about_us'); ?>"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="<?= base_url('/dashboard/leaderboard'); ?>"><i class="fas fa-info-circle"></i> leaderboard</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -49,4 +52,26 @@
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('active');
     }
+</script>
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  document.getElementById("logoutBtn").addEventListener("click", function(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Yakin ingin logout?',
+      text: "Sesi kamu akan diakhiri.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Ya, logout',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "<?= base_url(relativePath: 'logout') ?>";
+      }
+    });
+  });
 </script>

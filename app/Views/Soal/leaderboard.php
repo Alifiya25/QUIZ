@@ -5,6 +5,7 @@
   <title>Leaderboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a2e0f6c59f.js" crossorigin="anonymous"></script>
   <style>
     body {
       background: linear-gradient(135deg, #6a7fdb, #9a5fd1);
@@ -15,12 +16,13 @@
     }
     .leaderboard-container {
       margin: 50px auto;
-      background-color: #2d3362;
+      background: rgba(45, 51, 98, 0.9);
+      backdrop-filter: blur(8px);
       border-radius: 20px;
       padding: 40px;
       color: #fff;
-      width: 600px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      width: 650px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
       animation: fadeIn 0.5s ease-in-out;
     }
     @keyframes fadeIn {
@@ -29,12 +31,26 @@
     }
     .leaderboard-title {
       text-align: center;
-      font-size: 28px;
+      font-size: 32px;
       margin-bottom: 30px;
       color: white;
     }
-    
-    /* TOP 3 users styled with grid for proper centering */
+    .refresh-btn {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 15px;
+    }
+    .refresh-btn button {
+      background-color: #6a7fdb;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    .refresh-btn button:hover {
+      background-color: #5d70c9;
+    }
     .top-three {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -72,10 +88,13 @@
       font-size: 14px;
       margin-top: 5px;
     }
-    
-    /* Highlight the middle user (rank 1) */
+    .top-user .rank-label {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #aaa;
+    }
     .top-user.rank-1 {
-      grid-column: 2 / 3; /* middle column */
+      grid-column: 2 / 3;
       background-color: #4a4f8c;
       border: 3px solid gold;
       color: #fff;
@@ -83,15 +102,24 @@
       box-shadow: 0 0 15px gold;
       z-index: 10;
     }
-    /* Rank 2 left column */
     .top-user.rank-2 {
       grid-column: 1 / 2;
     }
-    /* Rank 3 right column */
     .top-user.rank-3 {
       grid-column: 3 / 4;
     }
-    
+    .top-user.rank-1 .rank-label {
+      color: gold;
+      font-weight: bold;
+    }
+    .top-user.rank-2 .rank-label {
+      color: silver;
+      font-weight: bold;
+    }
+    .top-user.rank-3 .rank-label {
+      color: #cd7f32;
+      font-weight: bold;
+    }
     .user-list {
       background-color: #3b4170;
       border-radius: 10px;
@@ -136,7 +164,6 @@
       color: #ccc;
       font-weight: bold;
     }
-    /* Scrollbar styling */
     .user-list::-webkit-scrollbar {
       width: 8px;
     }
@@ -151,50 +178,51 @@
   <?= view('header') ?>
 
   <div class="leaderboard-container">
+    <div class="refresh-btn">
+      <form method="GET">
+        <button type="submit"><i class="fas fa-sync-alt"></i> Refresh</button>
+      </form>
+    </div>
+
     <h4 class="leaderboard-title">
       Leaderboard <br />
       <small class="text-light">Quizzy</small>
     </h4>
 
-    <!-- Top 3 Users -->
     <?php
-    
-    // Urutkan ulang agar user rank 2, rank 1, rank 3 secara visual (kiri, tengah, kanan)
       $topThreeReordered = [
-      $topThree[1] ?? null, // Rank 2 - kiri
-      $topThree[0] ?? null, // Rank 1 - tengah
-      $topThree[2] ?? null, // Rank 3 - kanan
-    ];
-
+        $topThree[1] ?? null,
+        $topThree[0] ?? null,
+        $topThree[2] ?? null,
+      ];
     ?>
     <div class="top-three" role="list" aria-label="Top three users">
-  <?php foreach ($topThreeReordered as $index => $user): ?>
-    <?php 
-      if (!$user) continue; // Skip jika null
-
-      // Tentukan kelas rank berdasarkan posisi di $topThree asli
-      $originalIndex = array_search($user, $topThree, true); // pakai true agar identik
-      $rankClass = '';
-      if ($originalIndex === 0) $rankClass = 'rank-1';
-      elseif ($originalIndex === 1) $rankClass = 'rank-2';
-      elseif ($originalIndex === 2) $rankClass = 'rank-3';
-    ?>
-    <div class="top-user <?= $rankClass ?>" title="<?= esc($user['username']) ?>" role="listitem" tabindex="0">
-      <img src="https://via.placeholder.com/70/999999/ffffff?text=<?= $originalIndex + 1 ?>" alt="avatar <?= $originalIndex + 1 ?>" />
-      <div><?= esc($user['username']) ?></div>
-      <div class="score"><?= esc($user['score']) ?></div>
+      <?php foreach ($topThreeReordered as $index => $user): ?>
+        <?php 
+          if (!$user) continue;
+          $originalIndex = array_search($user, $topThree, true);
+          $rankClass = '';
+          if ($originalIndex === 0) $rankClass = 'rank-1';
+          elseif ($originalIndex === 1) $rankClass = 'rank-2';
+          elseif ($originalIndex === 2) $rankClass = 'rank-3';
+          $avatarUrl = !empty($user['avatar']) ? base_url('uploads/avatars/' . $user['avatar']) : base_url('images/stickman.png');
+        ?>
+        <div class="top-user <?= $rankClass ?>" title="<?= esc($user['username']) ?>" role="listitem" tabindex="0">
+          <img src="<?= esc($avatarUrl) ?>" alt="avatar <?= $originalIndex + 1 ?>" />
+          <div><?= esc($user['username']) ?></div>
+          <div class="rank-label">Rank <?= $originalIndex + 1 ?></div>
+          <div class="score"><?= esc($user['score']) ?></div>
+        </div>
+      <?php endforeach; ?>
     </div>
-  <?php endforeach; ?>
-</div>
 
-
-    <!-- Other Users -->
     <?php if (isset($others) && is_array($others) && count($others) > 0): ?>
       <div class="user-list" role="list" aria-label="Leaderboard other users">
         <?php foreach ($others as $i => $user): ?>
+          <?php $avatarUrl = !empty($user['avatar']) ? base_url('uploads/avatars/' . $user['avatar']) : base_url('images/stickman.png'); ?>
           <div class="user-item" role="listitem" tabindex="0" title="<?= esc($user['username']) ?>">
             <div class="user-rank"><?= $i + 4 ?></div>
-            <img src="https://via.placeholder.com/40/777777/ffffff?text=<?= strtoupper(substr($user['username'], 0, 1)) ?>" alt="avatar <?= esc($user['username']) ?>" />
+            <img src="<?= esc($avatarUrl) ?>" alt="avatar <?= esc($user['username']) ?>" />
             <div class="user-name"><?= esc($user['username']) ?></div>
             <div class="user-score"><?= esc($user['score']) ?></div>
           </div>
