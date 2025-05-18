@@ -6,8 +6,8 @@ use CodeIgniter\Model;
 class SoalModel extends Model
 {
     protected $table = 'soal';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['soal', 'pilihan_a', 'pilihan_b', 'pilihan_c', 'pilihan_d', 'jawaban_benar'];
+    protected $primaryKey = 'id_soal';
+    protected $allowedFields = ['id_quiz','soal', 'pilihan_a', 'pilihan_b', 'pilihan_c', 'pilihan_d', 'jawaban_benar'];
 
 
     protected $useTimestamps = true;

@@ -32,12 +32,11 @@
                     <li><a href="<?= base_url('soal/list_quiz') ?>"><i class="fas fa-list-ul"></i> List Quiz</a></li>
                     <li><a href="<?= base_url('admin/daftar_peserta') ?>"><i class="fas fa-users"></i> Manajemen Peserta</a></li>
                     <li><a href="<?= base_url('admin/daftar_admin') ?>"><i class="fas fa-user-cog"></i> Manajemen Admin</a></li>
-                    <li><a href="<?= base_url('soal/leaderboard') ?>"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                    <li><a href="<?= base_url('quiz/hasil_quiz') ?>"><i class="fas fa-trophy"></i> Hasil Quiz</a></li>
                     <li><a href="<?= base_url('/admin/about_us'); ?>"><i class="fas fa-info-circle"></i> About Us</a></li>
                 <?php endif; ?>
                 <?php if (session()->get('role') == 'peserta'): ?>
                     <li><a href="<?= base_url('/dashboard/peserta') ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="<?= base_url('soal/leaderboard') ?>"><i class="fas fa-trophy"></i> Leaderboard</a></li>
                     <li><a href="<?= base_url('peserta/tasks') ?>"><i class="fas fa-certificate"></i> Sertifikat</a></li>
                     <li><a href="<?= base_url('/admin/about_us'); ?>"><i class="fas fa-info-circle"></i> About Us</a></li>
                 <?php endif; ?>

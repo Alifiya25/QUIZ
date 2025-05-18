@@ -1,0 +1,135 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  margin: 0;
+  padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: #333;
+}
+
+#timer-container {
+  background-color: #6a0dad; /* ungu tua */
+  color: white;
+  font-weight: bold;
+  font-size: 22px;
+  padding: 12px 30px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 25px;
+  width: fit-content;
+  user-select: none;
+  box-shadow: 0 0 12px rgba(106, 13, 173, 0.6);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  font-size: 2rem;
+}
+
+.soal {
+  font-size: 1.7rem; /* lebih besar */
+  text-align: center;
+  margin-bottom: 40px;
+  color: #fff;
+  text-shadow: 0 0 7px rgba(0,0,0,0.6);
+  min-height: 110px; /* buat area soal lebih stabil */
+  padding: 0 20px;
+  line-height: 1.3;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+form {
+  max-width: 700px; /* diperbesar */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.jawaban-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px; /* jarak antar grid lebih besar */
+  padding: 0 15px;
+}
+
+.jawaban-button {
+  padding: 22px 28px; /* tombol lebih besar */
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 14px;
+  font-size: 1.3rem; /* font lebih besar */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+  user-select: none;
+}
+
+.jawaban-button:hover:not(:disabled) {
+  background-color: #dff0d8;
+  border-color: #4caf50;
+  box-shadow: 0 7px 20px rgba(76, 175, 80, 0.4);
+}
+
+.jawaban-button.selected {
+  background-color: #4caf50;
+  color: #fff;
+  border-color: #388e3c;
+  box-shadow: 0 7px 20px rgba(56, 142, 60, 0.7);
+}
+
+.jawaban-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+#confirm-btn {
+  margin-top: 35px;
+  padding: 15px 30px;
+  font-size: 1.4rem;
+  background-color: #667eea;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  display: none;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.7);
+}
+
+#confirm-btn:hover:not(:disabled) {
+  background-color: #5366d6;
+}
+
+@media (max-width: 480px) {
+  .jawaban-grid {
+    grid-template-columns: 1fr;
+  }
+  .jawaban-button {
+    font-size: 1.2rem;
+    padding: 18px 22px;
+  }
+  #confirm-btn {
+    font-size: 1.2rem;
+    padding: 14px 20px;
+  }
+  .soal {
+    font-size: 1.5rem;
+    min-height: 100px;
+    padding: 0 12px;
+  }
+}

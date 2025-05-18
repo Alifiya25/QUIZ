@@ -76,7 +76,7 @@
                                                         class="btn btn-sm btn-warning btn-edit-soal me-2"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalEditSoal"
-                                                        data-id="<?= $row['id'] ?>"
+                                                        data-id="<?= $row['id_soal'] ?>"
                                                         data-soal="<?= htmlspecialchars($row['soal'], ENT_QUOTES) ?>"
                                                         data-a="<?= htmlspecialchars($row['pilihan_a'], ENT_QUOTES) ?>"
                                                         data-b="<?= htmlspecialchars($row['pilihan_b'], ENT_QUOTES) ?>"
@@ -89,7 +89,7 @@
                                                 <!-- Hapus Soal -->
                                                 <button type="button"
                                                         class="btn btn-sm btn-danger btn-delete-soal"
-                                                        data-id="<?= $row['id'] ?>">
+                                                        data-id="<?= $row['id_soal'] ?>">
                                                     <i class="fas fa-trash"></i> Hapus
                                                 </button>
                                             </div>

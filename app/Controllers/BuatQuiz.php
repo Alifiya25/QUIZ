@@ -2,54 +2,89 @@
 
 namespace App\Controllers;
 
+use App\Models\SoalModel;
 use App\Models\BuatQuizModel;
+use App\Models\QuizSoalModel;
 use CodeIgniter\Controller;
 
 class BuatQuiz extends Controller
 {
-    public function index()
+    protected $soalModel;
+    protected $quizModel;
+    protected $quizSoalModel;
+
+    public function __construct()
     {
-        return view('soal/index');
+        $this->soalModel = new SoalModel();
+        $this->quizModel = new BuatQuizModel();
+        $this->quizSoalModel = new QuizSoalModel();
     }
 
+    // Ambil semua soal dalam format JSON
+    public function getSoal()
+    {
+        $soal = $this->soalModel->findAll();
+        return $this->response->setJSON($soal);
+    }
+
+    // Tampilkan daftar quiz (view)
+    public function list()
+    {
+        $data['quiz'] = $this->quizModel->findAll();
+        return view('Soal/list_quiz', $data);
+    }
+
+    // Proses buat quiz
     public function create()
     {
-        // Ambil data dari form
-        $data = [
-            'judul'          => $this->request->getPost('judul'),
-            'deskripsi'      => $this->request->getPost('deskripsi'),
-            'mode'           => $this->request->getPost('mode'),
-            'timer'          => $this->request->getPost('timer') * 60, // menit dikali 60
-            'kode_akses'     => strtoupper(bin2hex(random_bytes(6))),
-            'tanggal_dibuat' => date('Y-m-d H:i:s'),
-        ];
+        $request = service('request');
 
-        // Validasi dan simpan
-        $quizModel = new BuatQuizModel();
-        if (!$quizModel->save($data)) {
+        $judul = $request->getPost('judul');
+        $deskripsi = $request->getPost('deskripsi');
+        $mode = $request->getPost('mode');
+        $timer = $request->getPost('timer');
+        $idSoalList = explode(',', $request->getPost('id_soal'));
+
+        // Validasi sederhana
+        if (empty($judul) || empty($mode) || empty($idSoalList)) {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Terjadi kesalahan saat menyimpan quiz.',
+                'message' => 'Data tidak lengkap.'
             ]);
         }
 
-        // Ambil kode akses yang baru dibuat
-        $kodeAkses = $data['kode_akses'];
+        // Buat kode akses unik
+        $kodeAkses = strtoupper(uniqid('QUIZ'));
 
-        // Respons sukses
+        // Simpan quiz
+        $quizId = $this->quizModel->insert([
+            'judul'          => $judul,
+            'deskripsi'      => $deskripsi,
+            'mode'           => $mode,
+            'timer'          => $mode === 'time' ? $timer : null,
+            'kode_akses'     => $kodeAkses,
+            'tanggal_dibuat' => date('Y-m-d H:i:s')
+        ]);
+
+        if (!$quizId) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Gagal menyimpan quiz.'
+            ]);
+        }
+
+        // Simpan relasi ke tabel quiz_soal
+        foreach ($idSoalList as $idSoal) {
+            $this->quizSoalModel->insert([
+                'id_quiz' => $quizId,
+                'id_soal' => $idSoal
+            ]);
+        }
+
         return $this->response->setJSON([
             'success' => true,
-            'kode_akses' => $kodeAkses,
+            'kode_akses' => $kodeAkses
         ]);
     }
-
-    public function list()
-    {
-        // Ambil data quiz dari model
-        $buatQuizModel = new BuatQuizModel(); 
-        $data['quiz'] = $buatQuizModel->findAll(); 
-
-        // Kirim data ke view
-        return view('soal/list_quiz', $data);
-    }
+    
 }
