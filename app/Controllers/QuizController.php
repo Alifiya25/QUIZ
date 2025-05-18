@@ -198,7 +198,6 @@ class QuizController extends BaseController
             'user_id' => $userId,
             'id_quiz' => $quizId,
             'score' => $score,
-            'waktu_selesai' => $waktuSelesai,
         ]);
     }
 

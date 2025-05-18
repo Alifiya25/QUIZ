@@ -158,31 +158,35 @@
 
     <!-- Top 3 Users -->
     <?php
-    // Pastikan $topThree berisi user rank 1, 2, 3 secara urut index 0..2
+    
     // Urutkan ulang agar user rank 2, rank 1, rank 3 secara visual (kiri, tengah, kanan)
-    $topThreeReordered = [
-      $topThree[1], // Rank 2 - kiri
-      $topThree[0], // Rank 1 - tengah
-      $topThree[2], // Rank 3 - kanan
+      $topThreeReordered = [
+      $topThree[1] ?? null, // Rank 2 - kiri
+      $topThree[0] ?? null, // Rank 1 - tengah
+      $topThree[2] ?? null, // Rank 3 - kanan
     ];
+
     ?>
     <div class="top-three" role="list" aria-label="Top three users">
-      <?php foreach ($topThreeReordered as $index => $user): ?>
-        <?php 
-          // Tentukan kelas rank berdasarkan posisi di $topThree asli
-          $originalIndex = array_search($user, $topThree);
-          $rankClass = '';
-          if ($originalIndex === 0) $rankClass = 'rank-1';
-          elseif ($originalIndex === 1) $rankClass = 'rank-2';
-          elseif ($originalIndex === 2) $rankClass = 'rank-3';
-        ?>
-        <div class="top-user <?= $rankClass ?>" title="<?= esc($user['username']) ?>" role="listitem" tabindex="0">
-          <img src="https://via.placeholder.com/70/999999/ffffff?text=<?= $originalIndex + 1 ?>" alt="avatar <?= $originalIndex + 1 ?>" />
-          <div><?= esc($user['username']) ?></div>
-          <div class="score"><?= esc($user['score']) ?></div>
-        </div>
-      <?php endforeach; ?>
+  <?php foreach ($topThreeReordered as $index => $user): ?>
+    <?php 
+      if (!$user) continue; // Skip jika null
+
+      // Tentukan kelas rank berdasarkan posisi di $topThree asli
+      $originalIndex = array_search($user, $topThree, true); // pakai true agar identik
+      $rankClass = '';
+      if ($originalIndex === 0) $rankClass = 'rank-1';
+      elseif ($originalIndex === 1) $rankClass = 'rank-2';
+      elseif ($originalIndex === 2) $rankClass = 'rank-3';
+    ?>
+    <div class="top-user <?= $rankClass ?>" title="<?= esc($user['username']) ?>" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/70/999999/ffffff?text=<?= $originalIndex + 1 ?>" alt="avatar <?= $originalIndex + 1 ?>" />
+      <div><?= esc($user['username']) ?></div>
+      <div class="score"><?= esc($user['score']) ?></div>
     </div>
+  <?php endforeach; ?>
+</div>
+
 
     <!-- Other Users -->
     <?php if (isset($others) && is_array($others) && count($others) > 0): ?>
