@@ -17,7 +17,7 @@
         <div class="user-nav">
             <ul>
                 <li><a href="<?= base_url('profile') ?>"><i class="fas fa-user"></i></a></li>
-                <a href="#" class="btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="#" class="btn" id="logoutBtn" style="color: white;"><i class="fas fa-sign-out-alt"></i> Logout</a>
 
             </ul>
         </div>
@@ -35,13 +35,10 @@
                     <li><a href="<?= base_url('admin/daftar_admin') ?>"><i class="fas fa-user-cog"></i> Manajemen Admin</a></li>
                     <li><a href="<?= base_url('quiz/hasil_quiz') ?>"><i class="fas fa-trophy"></i> Hasil Quiz</a></li>
                     <li><a href="<?= base_url('/admin/about_us'); ?>"><i class="fas fa-info-circle"></i> About Us</a></li>
-                    <li><a href="<?= base_url('/dashboard/leaderboard'); ?>"><i class="fas fa-info-circle"></i> leaderboard</a></li>
                 <?php endif; ?>
                 <?php if (session()->get('role') == 'peserta'): ?>
                     <li><a href="<?= base_url('/dashboard/peserta') ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="<?= base_url('peserta/tasks') ?>"><i class="fas fa-certificate"></i> Sertifikat</a></li>
                     <li><a href="<?= base_url('/admin/about_us'); ?>"><i class="fas fa-info-circle"></i> About Us</a></li>
-                    <li><a href="<?= base_url('/dashboard/leaderboard'); ?>"><i class="fas fa-info-circle"></i> leaderboard</a></li>
                 <?php endif; ?>
             </ul>
         </nav>

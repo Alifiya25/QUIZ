@@ -231,6 +231,36 @@
     <?php else: ?>
       <p class="text-center text-light">No other users found.</p>
     <?php endif; ?>
+
+    <!-- Tabel Sertifikat Top 3 -->
+    <h5 class="text-white mt-4">Top 3 Sertifikat</h5>
+    <table class="table table-dark table-striped table-bordered mt-2">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Score</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($topThree as $i => $user): ?>
+          <tr>
+            <td><?= $i + 1 ?></td>
+            <td><?= esc($user['username']) ?></td>
+            <td><?= esc($user['score']) ?></td>
+            <td>
+              <a href="<?= site_url('quiz/sertifikat/' . $quizId . '/' . $user['user_id']) ?>" 
+                target="_blank" 
+                class="btn btn-success btn-sm">
+                Lihat Sertifikat
+              </a>
+            </td>
+
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
   </div>
 
   <?= view('footer') ?>

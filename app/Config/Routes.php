@@ -82,3 +82,5 @@ $routes->get('/leaderboard', 'LeaderboardController::index');
 $routes->get('quiz/quiz_selesai', 'QuizController::quizSelesai');
 $routes->get('/dashboard/leaderboard', 'Dashboard::leaderboard');
 
+$routes->get('quiz/sertifikat/(:num)/(:num)', 'QuizController::sertifikat/$1/$2');
+$routes->get('quiz/download_sertifikat/(:num)/(:num)', 'QuizController::downloadSertifikat/$1/$2');
