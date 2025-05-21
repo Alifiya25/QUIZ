@@ -67,7 +67,10 @@
             </div>
 
             <div class="text-center mt-4">
-                <a href="<?= base_url('/dashboard/admin') ?>" class="btn btn-outline-primary"><i class="bi bi-arrow-left"></i> Kembali ke Beranda</a>
+                <?php 
+                   $dashboardUrl =  ($role === 'admin') ? base_url('/dashboard/admin'): base_url('/dashboard/peserta')
+                ?>
+                <a href="<?= $dashboardUrl ?>" class="btn btn-primary">Masuk ke Dashboard</a>
             </div>
         </div>
     </div>

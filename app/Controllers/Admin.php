@@ -207,7 +207,8 @@ class Admin extends BaseController
     public function about_us()
     {
         return view('admin/about_us', [
-            'title' => 'About Us'
+            'title' => 'About Us',
+            'role' => session()->get('role')
         ]);
     }
 }
