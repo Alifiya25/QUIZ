@@ -16,7 +16,21 @@
         <!-- Kanan: Profile & Logout -->
         <div class="user-nav">
             <ul>
-                <li><a href="<?= base_url('profile') ?>"><i class="fas fa-user"></i></a></li>
+                <li class="dropdown">
+  <a href="#" class="dropdown-toggle" onclick="toggleProfileDropdown(event)">
+    <i class="fas fa-user"></i>
+    <i class="fas fa-caret-down"></i>
+  </a>
+  
+  <div class="profile-dropdown" id="profileDropdown">
+    <img src="<?= base_url('uploads/avatars/' . (session()->get('avatar') ?? 'default-avatar.png')) ?>" alt="Avatar" class="dropdown-avatar">
+    <div class="user-info">
+      <strong><?= session()->get('nama') ?? 'User' ?></strong>
+      <p><?= session()->get('email') ?? 'email@domain.com' ?></p>
+    </div>
+  </div>
+</li>
+
                 <a href="#" class="btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
 
             </ul>
@@ -74,4 +88,20 @@
       }
     });
   });
+</script>
+
+<<script>
+function toggleProfileDropdown(event) {
+    event.preventDefault();
+    const dropdown = document.getElementById("profileDropdown");
+    dropdown.classList.toggle("show");
+}
+
+// Menutup dropdown jika klik di luar
+window.addEventListener("click", function(event) {
+    if (!event.target.closest(".dropdown")) {
+        const dropdown = document.getElementById("profileDropdown");
+        if (dropdown) dropdown.classList.remove("show");
+    }
+});
 </script>

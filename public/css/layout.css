@@ -46,6 +46,55 @@ header .nav-links li a {
 header .nav-links li a:hover {
     text-decoration: underline;
 }
+/* Profile Dropdown */
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    color: #333;
+    border-radius: 10px;
+    padding: 15px;
+    width: 220px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 1000;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.profile-dropdown.show {
+    display: block;
+}
+
+.dropdown-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #5c2d79;
+}
+
+.user-info strong {
+    display: block;
+    font-size: 16px;
+    color: #5c2d79;
+}
+
+.user-info p {
+    font-size: 14px;
+    margin: 5px 0 0;
+    color: #444;
+}
+
+.avatar-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 5px;
+    vertical-align: middle;
+}
 
 /* Hamburger Menu */
 .hamburger {
