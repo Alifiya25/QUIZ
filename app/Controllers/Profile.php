@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
@@ -14,20 +15,14 @@ class Profile extends Controller
         $avatarFile = $this->request->getFile('avatar');
 
         if ($avatarFile && $avatarFile->isValid() && !$avatarFile->hasMoved()) {
-            // Generate nama random
             $newName = $avatarFile->getRandomName();
-            // Pindahkan file ke folder uploads/avatars
-            $avatarFile->move(WRITEPATH . '../public/uploads/avatars', $newName);
+            $avatarFile->move(FCPATH . 'uploads/avatars', $newName);
 
-            // Ambil user_id dari session
             $userId = $session->get('id');
 
-
             if ($userId) {
-                // Ambil nama avatar lama dari session
                 $oldAvatar = $session->get('avatar');
 
-                // Hapus file lama kalau bukan default-avatar
                 if ($oldAvatar && $oldAvatar !== 'default-avatar.png') {
                     $oldAvatarPath = WRITEPATH . '../public/uploads/avatars/' . $oldAvatar;
                     if (file_exists($oldAvatarPath)) {
@@ -35,27 +30,28 @@ class Profile extends Controller
                     }
                 }
 
-                // Update kolom foto_profile di database
                 $userModel->update($userId, ['foto_profile' => $newName]);
-
-                // Update session avatar
                 $session->set('avatar', $newName);
 
-                // Set flashdata sukses
-                $session->setFlashdata('success', 'Foto profil berhasil diupload!');
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'message' => 'Foto profil berhasil diupload!',
+                    'avatar' => base_url('uploads/avatars/' . $newName)
+                ]);
             } else {
-                // Jika user_id tidak ditemukan di session
-                $session->setFlashdata('error', 'User tidak ditemukan.');
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'User tidak ditemukan.'
+                ]);
             }
-
-            // Redirect sesuai role
-            return $this->redirectByRole();
         } else {
-            // Jika upload gagal
-            $session->setFlashdata('error', 'Gagal upload foto profil!');
-            return $this->redirectByRole();
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Gagal upload foto profil!'
+            ]);
         }
     }
+
 
     private function redirectByRole()
     {
