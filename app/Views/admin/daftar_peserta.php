@@ -43,7 +43,7 @@
                         </form>
                     </div>
 
-
+                    <!-- Tabel Peserta -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover align-middle">
                             <thead class="table-dark text-center">
@@ -120,20 +120,20 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil!',
-                    text: '<?= session()->getFlashdata("message") ?>',
+                    text: <?= json_encode(session()->getFlashdata('message')) ?>,
                     confirmButtonColor: '#3085d6'
                 });
             <?php elseif (session()->getFlashdata('error')): ?>
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: '<?= session()->getFlashdata("error") ?>',
+                    text: <?= json_encode(session()->getFlashdata('error')) ?>,
                     confirmButtonColor: '#d33'
                 });
             <?php endif; ?>
         });
-    
     </script>
+
 </body>
 
 </html>

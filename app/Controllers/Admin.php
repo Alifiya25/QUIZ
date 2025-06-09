@@ -4,13 +4,16 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use CodeIgniter\Controller;
+use App\Models\QuizUserModel;
 
 class Admin extends BaseController
 {
     protected $adminModel;
+    protected $quizUserModel;
     public function __construct()
     {
         $this->adminModel = new UserModel();
+        $this->quizUserModel = new QuizUserModel();
     }
 
     public function daftar_peserta()
@@ -69,21 +72,44 @@ class Admin extends BaseController
 
     public function delete_Peserta($id = null)
     {
-        if ($this->adminModel->delete($id)) {
-            session()->setFlashdata('message', 'User berhasil dihapus');
-        } else {
-            session()->setFlashdata('error', 'User gagal dihapus');
+        // Cek apakah user masih digunakan di tabel quiz_user
+        $relasiAda = $this->quizUserModel->where('id_user', $id)->countAllResults();
+
+        if ($relasiAda > 0) {
+            // Tidak boleh dihapus, tampilkan pesan
+            session()->setFlashdata('error', 'User tidak bisa dihapus karena masih memiliki data quiz.');
+            return redirect()->to('/admin/daftar_peserta');
         }
+
+        // Jika tidak digunakan, baru hapus
+        if ($this->adminModel->delete($id)) {
+            session()->setFlashdata('message', 'User berhasil dihapus.');
+        } else {
+            session()->setFlashdata('error', 'User gagal dihapus.');
+        }
+
         return redirect()->to('/admin/daftar_peserta');
     }
 
+
     public function delete_Admin($id = null)
     {
-        if ($this->adminModel->delete($id)) {
-            session()->setFlashdata('message', 'User berhasil dihapus');
-        } else {
-            session()->setFlashdata('error', 'User gagal dihapus');
+        // Cek apakah user masih digunakan di tabel quiz_user
+        $relasiAda = $this->quizUserModel->where('id_user', $id)->countAllResults();
+
+        if ($relasiAda > 0) {
+            // Tidak boleh dihapus, tampilkan pesan
+            session()->setFlashdata('error', 'User tidak bisa dihapus karena masih memiliki data quiz.');
+            return redirect()->to('/admin/daftar_admin');
         }
+
+        // Jika tidak digunakan, baru hapus
+        if ($this->adminModel->delete($id)) {
+            session()->setFlashdata('message', 'User berhasil dihapus.');
+        } else {
+            session()->setFlashdata('error', 'User gagal dihapus.');
+        }
+
         return redirect()->to('/admin/daftar_admin');
     }
 

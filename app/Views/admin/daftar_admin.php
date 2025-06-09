@@ -23,6 +23,7 @@
             <div class="col-lg-10">
                 <div class="card-custom">
                     <h2 class="mb-4"><?= esc($title) ?></h2>
+
                     <!-- Form Search + Sort -->
                     <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap">
                         <form method="get" class="d-flex flex-wrap gap-2">
@@ -42,12 +43,12 @@
                         </form>
                     </div>
 
-                    <!-- Tombol Tambah Data -->
+                    <!-- Tombol Tambah -->
                     <div class="text-end mb-3">
                         <a href="/admin/form_tambah_admin" class="btn btn-success">+ Tambah Data</a>
                     </div>
 
-                    <!-- Tabel -->
+                    <!-- Tabel Admin -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover align-middle">
                             <thead class="table-dark text-center">
@@ -91,10 +92,10 @@
 
     <?= view('footer') ?>
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Tombol Hapus dengan SweetAlert Konfirmasi -->
+    <!-- SweetAlert Konfirmasi + Flash Message -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const hapusButtons = document.querySelectorAll('.btn-hapus-admin');
@@ -105,8 +106,8 @@
                     const nama = this.dataset.nama;
 
                     Swal.fire({
-                        title: `Hapus ${nama} dari dunia?`,
-                        text: "Data akan dihapus secara permanen.",
+                        title: `Hapus ${nama}?`,
+                        text: "Data admin akan dihapus secara permanen!",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',
@@ -120,29 +121,25 @@
                     });
                 });
             });
+
+            <?php if (session()->getFlashdata('message')): ?>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: <?= json_encode(session()->getFlashdata('message')) ?>,
+                    confirmButtonColor: '#3085d6'
+                });
+            <?php elseif (session()->getFlashdata('error')): ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: <?= json_encode(session()->getFlashdata('error')) ?>,
+                    confirmButtonColor: '#d33'
+                });
+            <?php endif; ?>
         });
     </script>
 
-    <!-- SweetAlert Flash Message -->
-    <?php if (session()->getFlashdata('message')): ?>
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '<?= session()->getFlashdata("message") ?>',
-                confirmButtonColor: '#3085d6'
-            });
-        </script>
-    <?php elseif (session()->getFlashdata('error')): ?>
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '<?= session()->getFlashdata("error") ?>',
-                confirmButtonColor: '#d33'
-            });
-        </script>
-    <?php endif; ?>
 </body>
 
 </html>
