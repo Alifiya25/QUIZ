@@ -29,7 +29,8 @@ class Auth extends Controller
                 'id' => $user['id'],
                 'username' => $user['username'],
                 'email' => $user['email'],
-                'role' => $user['role']
+                'role' => $user['role'],
+                'avatar'   => $user['foto_profile'] ?? 'default-avatar.png'
             ]);
 
             if ($user['role'] == 'admin') {
@@ -50,66 +51,96 @@ class Auth extends Controller
         return view('auth/register');
     }
 
-    public function processRegister()
+public function processRegister()
 {
-    $validation = \Config\Services::validation();
+    $rules = [
+        'username' => [
+            'label' => 'Username',
+            'rules' => 'required|min_length[3]|max_length[50]|regex_match[/^[a-zA-Z0-9_]+$/]',
+            'errors' => [
+                'required' => '{field} wajib diisi.',
+                'min_length' => '{field} minimal 3 karakter.',
+                'max_length' => '{field} maksimal 50 karakter.',
+                'regex_match' => '{field} hanya boleh mengandung huruf, angka, dan underscore (_). Tidak boleh ada spasi atau karakter lain.'
+            ]
+        ],
+        'email' => [
+            'label' => 'Email',
+            'rules' => 'required|valid_email|is_unique[users.email]',
+            'errors' => [
+                'required' => '{field} wajib diisi.',
+                'valid_email' => '{field} harus berupa alamat email yang valid.',
+                'is_unique' => '{field} sudah digunakan, silakan gunakan email lain.'
+            ]
+        ],
+        'password' => [
+            'label' => 'Password',
+            'rules' => 'required|min_length[8]',
+            'errors' => [
+                'required' => '{field} wajib diisi.',
+                'min_length' => '{field} minimal 8 karakter.'
+            ]
+        ],
+        'password_confirm' => [
+            'label' => 'Konfirmasi Password',
+            'rules' => 'required|matches[password]',
+            'errors' => [
+                'required' => '{field} wajib diisi.',
+                'matches' => '{field} tidak cocok dengan password.'
+            ]
+        ],
+        'role' => [
+            'label' => 'Role',
+            'rules' => 'required|in_list[admin,peserta]',
+            'errors' => [
+                'required' => '{field} wajib diisi.',
+                'in_list' => '{field} harus diisi dengan admin atau peserta.'
+            ]
+        ]
+    ];
 
-    $validation->setRules([
-        'username' => 'required|min_length[3]|max_length[50]',
-        'email' => 'required|valid_email|is_unique[users.email]',
-        'password' => 'required|min_length[8]',
-        'password_confirm' => 'required|matches[password]',
-        'role'              => 'required|in_list[admin,peserta]',
+    if (!$this->validate($rules)) {
+        // Redirect kembali ke form dengan input lama dan error
+        return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    }
+
+    $userModel = new UserModel();
+
+    $userModel->save([
+        'username' => $this->request->getPost('username'),
+        'email' => $this->request->getPost('email'),
+        'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+        'role' => $this->request->getPost('role'),
     ]);
 
-    if ($this->validate($validation->getRules())) {
-        $userModel = new UserModel();
-        $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-        $email = $this->request->getPost('email');
-        $username = $this->request->getPost('username');
-        $role = $this->request->getPost('role');
+    // Kirim email pemberitahuan pendaftaran berhasil
+    $emailService = \Config\Services::email();
+    $emailService->setFrom('noreply@yourapp.com', 'QUIZZY');
+    $emailService->setTo($this->request->getPost('email'));
+    $emailService->setSubject('Registrasi Berhasil');
+    $emailService->setMailType('html');
+    $emailService->setMessage("
+        <html>
+            <head><title>Registrasi Berhasil</title></head>
+            <body>
+                <h2>Halo {$this->request->getPost('username')},</h2>
+                <p>Terima kasih telah mendaftar di aplikasi kami. Akun Anda telah berhasil dibuat.</p>
+                <p>Silakan login dan mulai gunakan aplikasinya!</p>
+                <br>
+                <p>Salam,</p>
+                <p><strong>Tim Kami</strong></p>
+            </body>
+        </html>
+    ");
 
-        // Simpan user ke database
-        $userModel->save([
-            'username' => $username,
-            'email' => $email,
-            'password' => $password,
-            'role'     => $role,
-
-        ]);
-
-        // Kirim email pemberitahuan pendaftaran berhasil
-        $emailService = \Config\Services::email();
-        $emailService->setFrom('noreply@yourapp.com', 'QUIZZY');
-        $emailService->setTo($email);
-        $emailService->setSubject('Registrasi Berhasil');
-        $emailService->setMailType('html'); // supaya bisa kirim HTML
-        $emailService->setMessage("
-            <html>
-                <head><title>Registrasi Berhasil</title></head>
-                <body>
-                    <h2>Halo $username,</h2>
-                    <p>Terima kasih telah mendaftar di aplikasi kami. Akun Anda telah berhasil dibuat.</p>
-                    <p>Silakan login dan mulai gunakan aplikasinya!</p>
-                    <br>
-                    <p>Salam,</p>
-                    <p><strong>Tim Kami</strong></p>
-                </body>
-            </html>
-        ");
-
-        if (!$emailService->send()) {
-            session()->setFlashdata('warning', 'Registrasi berhasil, tapi gagal mengirim email notifikasi.');
-        } else {
-            session()->setFlashdata('success', 'Registrasi berhasil! Silakan cek email Anda dan login.');
-        }
-
-        return redirect()->to('/login');
+    if (!$emailService->send()) {
+        session()->setFlashdata('warning', 'Registrasi berhasil, tapi gagal mengirim email notifikasi.');
     } else {
-        return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        session()->setFlashdata('success', 'Registrasi berhasil! Silakan cek email Anda dan login.');
     }
-}
 
+    return redirect()->to('/login');
+}
 
     // Fungsi logout
     public function logout()
@@ -117,8 +148,6 @@ class Auth extends Controller
         session()->destroy();
         return redirect()->to('/login');
     }
-
-
 
     // Fungsi untuk menampilkan halaman lupa password
     public function forgotPassword()

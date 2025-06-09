@@ -1,4 +1,4 @@
-/* Body */
+/* ====== Body ====== */
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -10,12 +10,11 @@ body {
     box-sizing: border-box;
 }
 
-/* Header */
+/* ====== Header ====== */
 header {
     background-color: #5c2d79;
     color: white;
     padding: 10px 20px;
-    position: relative;
 }
 
 .header-container {
@@ -24,55 +23,95 @@ header {
     align-items: center;
 }
 
-header h1 {
-    font-size: 20px;
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    z-index: 1000;
 }
 
-header .nav-links {
+.hamburger .line {
+    width: 100%;
+    height: 4px;
+    background-color: white;
+}
+
+.header-spacer {
+    flex: 1;
+}
+
+/* ====== User Navigation ====== */
+.user-nav ul {
+    display: flex;
+    gap: 15px;
     list-style: none;
+    margin: 0;
     padding: 0;
 }
 
-header .nav-links li {
-    display: inline-block;
-    margin-right: 15px;
-}
-
-header .nav-links li a {
+.user-nav ul li a {
     color: white;
+    font-size: 18px;
     text-decoration: none;
 }
 
-header .nav-links li a:hover {
-    text-decoration: underline;
-}
-/* Profile Dropdown */
-.profile-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: white;
-    color: #333;
-    border-radius: 10px;
-    padding: 15px;
-    width: 220px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    z-index: 1000;
-    margin-top: 10px;
-    text-align: center;
+.user-nav ul li a:hover {
+    opacity: 0.8;
 }
 
-.profile-dropdown.show {
-    display: block;
-}
-
+/* ====== Avatar & Dropdown ====== */
 .dropdown-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dropdown-avatar-large {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 10px;
     border: 2px solid #5c2d79;
+}
+
+.user-nav ul li.dropdown {
+    position: relative;
+}
+
+.profile-dropdown {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    z-index: 1000;
+    width: 230px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    border-radius: 10px;
+}
+
+.profile-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.user-info {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .user-info strong {
@@ -87,51 +126,26 @@ header .nav-links li a:hover {
     color: #444;
 }
 
-.avatar-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-left: 5px;
-    vertical-align: middle;
+input[type="file"] {
+    margin-top: 10px;
 }
 
-/* Hamburger Menu */
-.hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 25px;
-    cursor: pointer;
-    position: absolute; /* Make sure it's on top */
-    top: 10px;
-    left: 20px;
-    z-index: 1000; /* Ensure it stays on top */
-}
-
-.hamburger .line {
-    width: 100%;
-    height: 4px;
-    background-color: white;
-}
-
-/* Sidebar */
+/* ====== Sidebar ====== */
 #sidebar {
     width: 250px;
     background-color: #5c2d79;
     color: white;
     position: fixed;
     top: 0;
-    left: -250px; /* Hidden initially */
+    left: -250px;
     height: 100%;
     padding-top: 20px;
     transition: left 0.3s ease;
-    z-index: 999; /* Sidebar stays under the hamburger menu */
+    z-index: 999;
 }
 
 #sidebar.active {
-    left: 0; /* Show the sidebar */
+    left: 0;
 }
 
 #sidebar nav ul {
@@ -155,40 +169,16 @@ header .nav-links li a:hover {
     background-color: #575757;
 }
 
-/* Spacer agar hamburger dan user-nav saling menjauh */
-.spacer {
-    flex: 1;
-}
-
-.user-nav ul {
-    display: flex;
-    gap: 15px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.user-nav ul li a {
-    color: white;
-    font-size: 18px;
-    text-decoration: none;
-}
-
-.user-nav ul li a:hover {
-    opacity: 0.8;
-}
-
-/* Footer */
+/* ====== Footer ====== */
 footer {
-    background-color: #5c2d79; /* Same color as header */
+    background-color: #5c2d79;
     color: white;
     text-align: center;
     padding: 10px;
-    margin-top: auto; /* Ensure it stays at the bottom */
+    margin-top: auto;
     width: 100%;
 }
 
-/* Prevent footer from overlapping with content */
 footer p {
     margin: 0;
 }

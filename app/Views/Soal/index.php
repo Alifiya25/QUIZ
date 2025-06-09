@@ -12,7 +12,7 @@
     
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Daftar Soal</h2>
+        <h2>📋Daftar Soal</h2>
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahSoal">
             <i class="fas fa-plus"></i> Tambah Soal
         </button>

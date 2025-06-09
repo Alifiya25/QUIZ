@@ -26,7 +26,7 @@
 
         <!-- Google Sign In Button -->
         <div class="google-btn">
-            <a href="/google-redirect" class="google-signin-btn">
+            <a href="google-redirect" class="google-signin-btn">
                 <i class="fab fa-google"></i> Sign in with Google
             </a>
         </div>

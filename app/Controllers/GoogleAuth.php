@@ -9,17 +9,20 @@ use App\Models\UserModel;
 class GoogleAuth extends BaseController
 {
     public function redirect()
-    {
-        $client = new Google_Client();
-        $client->setClientId(getenv('GOOGLE_CLIENT_ID'));
-        $client->setClientSecret(getenv('GOOGLE_CLIENT_SECRET'));
-        $client->setRedirectUri(getenv('GOOGLE_REDIRECT_URI'));
-        $client->addScope('email');
-        $client->addScope('profile');
+{
+    $client = new Google_Client();
+    $client->setClientId(getenv('GOOGLE_CLIENT_ID'));
+    $client->setClientSecret(getenv('GOOGLE_CLIENT_SECRET'));
+    $client->setRedirectUri(getenv('GOOGLE_REDIRECT_URI'));
+    $client->addScope('email');
+    $client->addScope('profile');
 
-        $authUrl = $client->createAuthUrl();
-        return redirect()->to($authUrl);
-    }
+    // Tambahkan prompt=select_account supaya muncul pilihan akun Google
+    $client->setPrompt('select_account');
+
+    $authUrl = $client->createAuthUrl();
+    return redirect()->to($authUrl);
+}
 
     public function callback()
     {

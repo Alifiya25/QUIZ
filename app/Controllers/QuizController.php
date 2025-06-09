@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\BuatQuizModel;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class QuizController extends BaseController
 {
@@ -252,16 +254,117 @@ class QuizController extends BaseController
         'topThree' => $topThree,
         'others'   => $others,
         'score'    => $score,
+        'quizId'   => $quizId,
+        
     ]);
 }
 
 
-    public function hasilquiz()
+   public function hasilQuiz()
 {
-    $model = new \App\Models\QuizUserModel();
-    $data['hasil'] = $model->getResultsWithUsername();
+    $keyword = $this->request->getGet('keyword');
 
-    return view('quiz/hasil_quiz', $data);
+    $model = new \App\Models\QuizUserModel();
+
+    if (!empty($keyword)) {
+        $hasil = $model->searchQuiz($keyword);
+    } else {
+        $hasil = $model->getResultsWithUsername();
+    }
+
+    return view('quiz/hasil_quiz', [
+        'hasil' => $hasil,
+        'keyword' => $keyword,
+    ]);
 }
 
+
+public function sertifikat($quizId, $userId)
+{
+    $db = \Config\Database::connect();
+    $leaderboardTable = $db->table('leaderboard');
+
+    $result = $leaderboardTable
+        ->select('leaderboard.*, users.username, quiz.judul as quiz_title')
+        ->join('users', 'users.id = leaderboard.user_id')
+        ->join('quiz', 'quiz.id_quiz = leaderboard.id_quiz')
+        ->where('leaderboard.id_quiz', $quizId)
+        ->orderBy('leaderboard.score', 'DESC')
+        ->get()
+        ->getResultArray();
+
+    $rank = 1;
+    $certificateData = null;
+    foreach ($result as $row) {
+        if ($row['user_id'] == $userId && $rank <= 3) {
+            $certificateData = [
+                'username' => $row['username'],
+                'score' => $row['score'],
+                'quiz_title' => $row['quiz_title'],
+                'rank' => $rank,
+            ];
+            break;
+        }
+        $rank++;
+    }
+
+    if (!$certificateData) {
+        return redirect()->back()->with('error', 'Sertifikat hanya untuk peringkat 1-3.');
+    }
+
+    return view('quiz/certificate_view', $certificateData);
+}
+
+public function downloadSertifikat($quizId, $userId)
+{
+    $db = \Config\Database::connect();
+    $leaderboardTable = $db->table('leaderboard');
+
+    $result = $leaderboardTable
+        ->select('leaderboard.*, users.username, quiz.judul as quiz_title')
+        ->join('users', 'users.id = leaderboard.user_id')
+        ->join('quiz', 'quiz.id_quiz = leaderboard.id_quiz')
+        ->where('leaderboard.id_quiz', $quizId)
+        ->orderBy('leaderboard.score', 'DESC')
+        ->get()
+        ->getResultArray();
+
+    $rank = 1;
+    $certificateData = null;
+    foreach ($result as $row) {
+        if ($row['user_id'] == $userId && $rank <= 3) {
+            $certificateData = [
+                'username' => $row['username'],
+                'score' => $row['score'],
+                'quiz_title' => $row['quiz_title'],
+                'rank' => $rank,
+            ];
+            break;
+        }
+        $rank++;
+    }
+
+    if (!$certificateData) {
+        return redirect()->back()->with('error', 'Sertifikat hanya untuk peringkat 1-3.');
+    }
+
+    // Inisialisasi Dompdf
+    $options = new Options();
+    $options->set('isRemoteEnabled', true);
+    $dompdf = new Dompdf($options);
+
+    // Ambil HTML dari view certificate_view
+    $html = view('quiz/certificate_view', $certificateData);
+
+    // Load HTML ke dompdf
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->render();
+
+    // Output PDF ke browser untuk diunduh
+    return $this->response
+        ->setHeader('Content-Type', 'application/pdf')
+        ->setHeader('Content-Disposition', 'attachment; filename="sertifikat_' . $certificateData['username'] . '.pdf"')
+        ->setBody($dompdf->output());
+}
 }

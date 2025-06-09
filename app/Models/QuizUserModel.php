@@ -32,12 +32,25 @@ class QuizUserModel extends Model
     }
 
     // Method baru untuk ambil hasil quiz sekaligus username user
-    public function getResultsWithUsername()
+   public function getResultsWithUsername()
 {
-    return $this->select('quiz_user.*, users.username')
-                ->join('users', 'users.id = quiz_user.id_user')  // sesuaikan kolom primary key user di sini
-                ->orderBy('waktu_selesai', 'DESC')
+    return $this->select('quiz_user.*, users.username, quiz.judul')
+                ->join('users', 'users.id = quiz_user.id_user')
+                ->join('quiz', 'quiz.id_quiz = quiz_user.id_quiz')
+                ->orderBy('score', 'DESC')  // <-- Urutkan berdasarkan score juga
                 ->findAll();
 }
 
+public function searchQuiz($keyword)
+{
+    return $this->select('quiz_user.*, users.username, quiz.judul')
+                ->join('users', 'users.id = quiz_user.id_user')
+                ->join('quiz', 'quiz.id_quiz = quiz_user.id_quiz')
+                ->groupStart()
+                    ->like('users.username', $keyword)
+                    ->orLike('quiz.judul', $keyword)
+                ->groupEnd()
+                ->orderBy('score', 'DESC')  // <-- Urutkan berdasarkan score dari besar ke kecil
+                ->findAll();
+}
 }
