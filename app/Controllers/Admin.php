@@ -179,15 +179,57 @@ class Admin extends BaseController
 
         return view('admin/form_edit_admin', [
             'title' => 'Edit Admin',
-            'user' => $admin
+            'user' => $admin,
+            'validation' => session('validation') ?? \Config\Services::validation()
         ]);
     }
 
     public function update_admin($id)
     {
+        $adminLama = $this->adminModel->find($id);
+        $emailBaru = $this->request->getPost('email');
+
+        $emailRules = 'required|valid_email';
+        if ($emailBaru != $adminLama['email']) {
+            // Jika email diubah, tambahkan rule is_unique
+            $emailRules .= '|is_unique[users.email]';
+        }
+
+        if (!$this->validate([
+            'username' => [
+                'rules' => 'required|min_length[3]',
+                'errors' => [
+                    'required' => 'Username harus diisi.',
+                    'min_length' => 'Username minimal 3 karakter.'
+                ]
+            ],
+            'email' => [
+                'rules' => $emailRules,
+                'errors' => [
+                    'required' => 'Email harus diisi.',
+                    'valid_email' => 'Email tidak valid.',
+                    'is_unique' => 'Email sudah terdaftar.'
+                ]
+            ],
+            'password' => [
+                'rules' => 'permit_empty|min_length[6]',
+                'errors' => [
+                    'min_length' => 'Password minimal 6 karakter.'
+                ]
+            ],
+            'role' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Role harus dipilih.'
+                ]
+            ]
+        ])) {
+            return redirect()->to('/admin/form_edit_admin/' . $id)->withInput()->with('validation', \Config\Services::validation());
+        }
+
         $data = [
             'username' => $this->request->getPost('username'),
-            'email'    => $this->request->getPost('email'),
+            'email'    => $emailBaru,
             'role'     => $this->request->getPost('role')
         ];
 
@@ -200,6 +242,7 @@ class Admin extends BaseController
         return redirect()->to('/admin/daftar_admin')->with('message', 'Data berhasil diperbarui!');
     }
 
+
     public function edit_peserta($id)
     {
         $peserta = $this->adminModel->find($id);
@@ -209,15 +252,57 @@ class Admin extends BaseController
 
         return view('admin/form_edit_peserta', [
             'title' => 'Edit Peserta',
-            'user' => $peserta
+            'user' => $peserta,
+            'validation' => session('validation') ?? \Config\Services::validation()
         ]);
     }
 
     public function update_peserta($id)
     {
+        $pesertaLama = $this->adminModel->find($id);
+        $emailBaru = $this->request->getPost('email');
+
+        $emailRules = 'required|valid_email';
+        if ($emailBaru != $pesertaLama['email']) {
+            // Jika email diubah, tambahkan rule is_unique
+            $emailRules .= '|is_unique[users.email]';
+        }
+
+        if (!$this->validate([
+            'username' => [
+                'rules' => 'required|min_length[3]',
+                'errors' => [
+                    'required' => 'Username harus diisi.',
+                    'min_length' => 'Username minimal 3 karakter.'
+                ]
+            ],
+            'email' => [
+                'rules' => $emailRules,
+                'errors' => [
+                    'required' => 'Email harus diisi.',
+                    'valid_email' => 'Email tidak valid.',
+                    'is_unique' => 'Email sudah terdaftar.'
+                ]
+            ],
+            'password' => [
+                'rules' => 'permit_empty|min_length[6]',
+                'errors' => [
+                    'min_length' => 'Password minimal 6 karakter.'
+                ]
+            ],
+            'role' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Role harus dipilih.'
+                ]
+            ]
+        ])) {
+            return redirect()->to('/admin/form_edit_peserta/' . $id)->withInput()->with('validation', \Config\Services::validation());
+        }
+
         $data = [
             'username' => $this->request->getPost('username'),
-            'email'    => $this->request->getPost('email'),
+            'email'    => $emailBaru,
             'role'     => $this->request->getPost('role')
         ];
 

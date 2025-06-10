@@ -23,7 +23,10 @@
 
                         <div class="mb-3">
                             <label for="username" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="username" name="username" value="<?= esc($user['username']) ?>" required>
+                            <input type="text" class="form-control <?= (isset($validation) && $validation->hasError('username')) ? 'is-invalid' : '' ?>" id="username" name="username" value="<?= esc($user['username']) ?>" required>
+                            <div class="invalid-feedback">
+                                <?= (isset($validation)) ? $validation->getError('username') : '' ?>
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -37,7 +40,10 @@
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password (kosongkan jika tidak ingin mengubah)</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="password" class="form-control <?= (isset($validation) && $validation->hasError('password')) ? 'is-invalid' : '' ?>" id="password" name="password">
+                            <div class="invalid-feedback">
+                                <?= (isset($validation)) ? $validation->getError('password') : '' ?>
+                            </div>
                         </div>
 
                         <div class="mb-3">
